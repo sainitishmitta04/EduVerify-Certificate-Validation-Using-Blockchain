@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>EDU-Verify</title>
+
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+			integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+			crossorigin="anonymous"
+		></script>
+		<link rel=stylesheet type=text/css href="/stylesheets/profile.css">
+		<script
+			src="https://kit.fontawesome.com/b32f384ef6.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://meet.jit.si/external_api.js"></script>
+		<script src="/script/profile.js"></script>
+	</head>
+
+	<body
+		background="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+	>
+		<nav
+			class="navbar fixed-top navbar-dark bg-dark navbar-expand-md navbar-main"
+			id="nav-bar"
+		>
+			<div class="container">
+				<div>
+					<a href="/" class="navbar-brand nav-item">EDU VERIFY</a>
+				</div>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<i class="fas fa-bars"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<ul class="nav navbar-nav navbar-right">
+                    			<% if(!currentUser){ %>
+                        			<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    			<% } else { %>
+                        			<li class="nav-item">
+										<a class="nav-link" href="/profile">Hi <%=currentUser.username%></a>
+									</li>
+                        			<li class="nav-item">
+										<a class="nav-link" href="/logout">Logout</a>
+									</li>
+                    			<% } %>
+                			</ul>
+						<li class="nav-item">
+							<a class="nav-link" href="/#contact">Contact Us</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<!-- <div class="container text-center">
+			<div id="jitsi-container" class="afterClick"></div>
+		</div> -->
+		
+		
+		<section id="about-body" class="about-top">
+			<div class="content-heading text-center" style="text-transform: uppercase;">
+				<%=currentUser.usertype%> portal
+			</div>
+			<br><br>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="about-text-container jumbotron meeting-start">
+							<h2 class="content-heading">Student Profile</h2>
+							<br>
+							<p class="content">
+								Username: <strong><%=user.username%></strong>
+							</p>
+							<p>
+								Email ID: <strong><%=user.email%></strong>
+							</p>
+							<p>
+								SRN: <strong><%=user.srn%></strong>
+							</p>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="jumbotron meeting-start about-text-container">
+							<h2 class="content-heading">Documents</h2>
+							<br>
+								<p>
+									Documents linked to <%=user.srn%> are listed below.
+							</p>
+							<br>
+								<div class="row container text-center flex-wrap" id="blog-grid">
+									<% certificate.forEach(function(certificate){ %>
+										<!-- <div class="form-content"> -->
+											   <!-- <button class="btn button btn-block text-uppercase"> -->
+										<%=certificate.description%>
+										<a class="btn button btn-block text-uppercase" href="<%=certificate.link%>" target="_blank" rel="noopener noreferrer">view certificate</a>
+												<!-- </button> -->
+										<!-- </div> -->
+									<% }); %>
+								</div>
+						</div>
+						<!-- <div class="jumbotron meeting-start">
+							
+							<div class="text-center afterClick" id="div1">
+								<h2 class="content-heading">Enter the meeting URL</h2>
+								
+
+								
+									<input id="startMain" name="meetingcode" class="form-control mt-4" type="url"required>
+									<button
+										class="btn button btn-block text-uppercase mt-4"
+										type="submit"
+										id="start">
+										Join Meeting
+									</button>
+								
+								
+							</div>
+							
+							<div class="text-center" id="div2">
+								<h2 class="content-heading">To Join a Meeting</h2>
+								<br />
+								<button
+									class="btn button btn-block text-uppercase"
+									type="submit"
+									id="join" 
+									onclick="myFunction()">
+									Join Meeting
+								</button>
+							</div>
+							<div class="text-center" id="div3">
+								<h2 class="content-heading">To Host a Meeting</h2>
+								<br />
+								<button
+									class="btn button btn-block text-uppercase"
+									type="submit"
+									id="host"
+									onclick="myFunctionNew()">
+									Host a Meeting
+								</button>
+							</div>
+							
+							<div class="text-center afterClick" id="div4">
+								<h2 class="content-heading">Please use the link below:</h2>
+								<br />
+									<button
+										class="btn button btn-block text-uppercase"
+										type="submit"
+										id="go">
+										Go to the meeting
+									</button>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		
+		<script>
+			
+			var join = document.getElementById("start");
+			join.addEventListener("click", () =>{
+				var str=$("#startMain").val();
+				location.replace(str);
+			})
+			
+			var button = document.querySelector("#go");
+			var container = document.querySelector("#jitsi-container");
+			var api = null;
+
+			button.addEventListener("click", () => {
+				document.getElementById("about-body").classList.add("afterClick");
+				container.classList.remove("afterClick");
+				var possible =
+					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				var stringLength = 30;
+
+				function pickRandom() {
+					return possible[Math.floor(Math.random() * possible.length)];
+				}
+
+				var randomString = Array.apply(null, Array(stringLength))
+					.map(pickRandom)
+					.join("");
+
+				var domain = "meet.jit.si";
+				var options = {
+					roomName: randomString,
+					parentNode: container,
+					width: 600,
+					height: 600,
+				};
+				api = new JitsiMeetExternalAPI(domain, options);
+			});
+		</script>
+	</body>	
+</html>
